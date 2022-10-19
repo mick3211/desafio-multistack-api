@@ -43,9 +43,12 @@ INSTALLED_APPS = [
     'api',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
+     'corsheaders',
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -148,6 +151,9 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 
 # Internationalization
