@@ -26,7 +26,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class LocalSerializer(serializers.ModelSerializer):
 
-    user = UserSerializer()
+    usuario = UserSerializer(source='user')
     nome = serializers.CharField(max_length=255, min_length=3, required=True)
     endereco = serializers.CharField(max_length=255, min_length=3, required=True)
     contato = serializers.CharField(max_length=255, min_length=3, required=True)
