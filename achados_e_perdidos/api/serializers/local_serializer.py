@@ -35,7 +35,7 @@ class LocalSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Local
-        exclude = ('imagem_local',)
+        exclude = ('imagem_local', 'user')
 
 
     def get_imagem(self, data):
