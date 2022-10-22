@@ -9,5 +9,4 @@ class ImagemLocalSerializer(serializers.Serializer):
         local = get_local_by_user_id(self.context['user'].id)
         local.imagem_local = validated_data['imagem_local']
         local.save()
-        print(local.imagem_local)
         return validated_data

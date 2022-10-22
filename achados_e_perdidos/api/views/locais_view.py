@@ -30,7 +30,6 @@ class ImagemLocalView(APIView):
 
     def post(self, request, format=None):
         serializer_imagem = ImagemLocalSerializer(data=request.data, context={"user": request.user})
-        print(request.user)
         if serializer_imagem.is_valid():
             serializer_imagem.save()
             return Response({"message": 'Imagem definida com sucesso!'})
