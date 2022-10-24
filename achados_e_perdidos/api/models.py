@@ -14,7 +14,7 @@ def get_local_image_name(instance, filename):
     return os.path.join('img', 'locais', get_image_name(filename, instance.user.id))
 
 def get_objeto_image_name(instance, filename):
-    return os.path.join('img', 'objetos', get_image_name(filename))
+    return os.path.join('img', 'objetos', get_image_name(filename, instance.id))
 
 
 # Create your models here.
@@ -37,10 +37,12 @@ class Local(models.Model):
 
 class Objeto(models.Model):
     nome = models.CharField(max_length=255, blank=False, null=False)
-    descricao = models.CharField(max_length=255, blank=False, null=True)
+    descricao = models.CharField(max_length=255, blank=False, null=False)
     entregue = models.BooleanField(default=False, null=False, blank=False)
     imagem_objeto = models.ImageField(null=True, upload_to=get_objeto_image_name, validators=[validate_image_file_extension,])
     local = models.ForeignKey(to=Local, on_delete=models.CASCADE, null=False, blank=False)
     dono_nome = models.CharField(max_length=255, blank=False, null=True)
     dono_cpf = models.CharField(max_length=11, blank=False, null=True)
+    created_at = models.DateField(auto_now_add=True)
+    updated_at = models.DateField(auto_now=True)
     

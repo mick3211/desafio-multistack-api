@@ -47,8 +47,8 @@ class LocalSerializer(serializers.ModelSerializer):
         links.add_put('atualizar_local', reverse('locais-list'))
         links.add_delete('apagar_local', reverse('locais-list'))
         links.add_post('definir_imagem_local', reverse('imagem-local'))
-        # links.add_get('listar_objetos_local', reverse('objetos-list'))
-        # links.add_post('adicionar_objeto_local', reverse('objetos-list'))
+        links.add_get('listar_objetos_local', reverse('objetos-list'))
+        links.add_post('adicionar_objeto_local', reverse('objetos-list'))
         return links.to_array()
 
     def create(self, validated_data):
