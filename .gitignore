@@ -1,4 +1,4 @@
 /venv
-achados_e_perdidos/img
+achados_e_perdidos/static/img
 __pycache__
 .env
