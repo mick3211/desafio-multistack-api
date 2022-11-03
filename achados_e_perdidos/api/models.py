@@ -11,10 +11,10 @@ def get_image_name(filename, id=uuid.uuid4()):
     return filename
 
 def get_local_image_name(instance, filename):
-    return os.path.join('static', 'img', 'locais', get_image_name(filename, instance.user.id))
+    return os.path.join('api', 'static', 'img', 'locais', get_image_name(filename, instance.user.id))
 
 def get_objeto_image_name(instance, filename):
-    return os.path.join('static', 'img', 'objetos', get_image_name(filename, instance.id))
+    return os.path.join('api', 'static', 'img', 'objetos', get_image_name(filename, instance.id))
 
 
 # Create your models here.
