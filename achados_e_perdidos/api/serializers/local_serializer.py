@@ -30,7 +30,7 @@ class LocalSerializer(serializers.ModelSerializer):
     nome = serializers.CharField(max_length=255, min_length=3, required=True)
     endereco = serializers.CharField(max_length=255, min_length=3, required=True)
     contato = serializers.CharField(max_length=255, min_length=3, required=True)
-    imagem = serializers.SerializerMethodField(read_only=True, source='imagem_local')
+    imagem = serializers.ImageField(read_only=True, source='imagem_local')
     links = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
