@@ -2,6 +2,7 @@ from rest_framework import serializers
 from ..models import Objeto
 from ..hateoas import Hateoas
 from django.urls import reverse
+from django.contrib.auth.models import AnonymousUser
 
 
 class ObjetoSerializer(serializers.ModelSerializer):
@@ -17,8 +18,11 @@ class ObjetoSerializer(serializers.ModelSerializer):
 
 
     def get_links(self, obj):
-        links = Hateoas()
+        user = self.context['request'].user
+        if isinstance(user, AnonymousUser):
+            return None
 
+        links = Hateoas()
         links.add_get('self', reverse('objeto-detail', kwargs={'objetoId': obj.id}))
         links.add_put('atualizar_objeto', reverse('objeto-detail', kwargs={'objetoId': obj.id}))
         links.add_delete('apagar_objeto', reverse('objeto-detail', kwargs={'objetoId': obj.id}))

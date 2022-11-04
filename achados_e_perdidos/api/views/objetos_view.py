@@ -3,7 +3,6 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from ..serializers.objeto_serializer import ObjetoSerializer
-from ..serializers.imagem_objeto_serializer import ImagemObjetoSerializer
 from ..services.local_service import get_local_by_user_id
 from ..permissions.dono_permission import DonoPermission
 from ..models import Objeto
@@ -16,7 +15,7 @@ class ObjetoView(APIView):
     def get(self, request, format=None):
         local_id = get_local_by_user_id(request.user.id).id
         objetos = Objeto.objects.filter(local_id=local_id)
-        serializer_objeto = ObjetoSerializer(objetos, many=True)
+        serializer_objeto = ObjetoSerializer(objetos, many=True, context={'request': request})
         return Response(serializer_objeto.data, status.HTTP_200_OK)
 
 
@@ -41,7 +40,7 @@ class ObjetoViewId(APIView):
             return Response({'message': 'Objeto não encontrado'}, status.HTTP_404_NOT_FOUND)
 
         self.check_object_permissions(request, objeto)
-        serializer_objeto = ObjetoSerializer(objeto)
+        serializer_objeto = ObjetoSerializer(objeto, context={'request': request})
         return Response(serializer_objeto.data, status.HTTP_200_OK)
 
     def put(self, request, objetoId, format=None):
@@ -51,7 +50,7 @@ class ObjetoViewId(APIView):
             return Response({'message': 'Objeto não encontrado'}, status.HTTP_404_NOT_FOUND)
 
         self.check_object_permissions(request, objeto)
-        serializer_objeto = ObjetoSerializer(objeto, request.data)
+        serializer_objeto = ObjetoSerializer(objeto, request.data, context={'request': request})
         if serializer_objeto.is_valid():
             serializer_objeto.save()
             return Response(serializer_objeto.data, status.HTTP_200_OK)

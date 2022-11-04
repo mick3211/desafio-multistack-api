@@ -8,10 +8,13 @@ from .views import (
                     locais_view,
                     objetos_view,
                     imagem_objeto_view,
+                    locais_busca_view,
                 )
 
 urlpatterns = [
     path('locais/', locais_view.LocaisView.as_view(), name='locais-list'),
+    path('locais/busca', locais_busca_view.LocaisBuscaView.as_view(), name='locais-busca-list'),
+    path('locais/<int:local_id>/objetos', locais_busca_view.ObjetosLocalBuscaView.as_view(), name='objetos-local-list'),
     path('locais/imagem/', locais_view.ImagemLocalView.as_view(), name='imagem-local'),
     path('objetos/', objetos_view.ObjetoView.as_view(), name='objetos-list'),
     path('objetos/<int:objetoId>/', objetos_view.ObjetoViewId.as_view(), name='objeto-detail'),
