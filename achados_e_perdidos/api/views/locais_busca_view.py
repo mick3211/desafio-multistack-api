@@ -13,7 +13,7 @@ class LocaisBuscaView(APIView):
         nome = request.query_params.get('nome')
         locais = Local.objects.filter(nome=nome)
 
-        locais_serializer = LocaisBuscaSerializer(locais, many=True)
+        locais_serializer = LocaisBuscaSerializer(locais, many=True, context={'request': request})
 
         return Response(locais_serializer.data)
 

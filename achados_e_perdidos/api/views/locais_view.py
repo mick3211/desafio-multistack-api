@@ -20,7 +20,7 @@ class LocaisView(APIView):
     
     def get(self, request, format=None):
         local = get_local_by_user_id(request.user.id)
-        serializer_local = LocalSerializer(instance=local)
+        serializer_local = LocalSerializer(instance=local, context={'request': request})
         return Response(serializer_local.data)
 
 
