@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from ..models import Objeto
-from django.contrib.auth.hashers import make_password
 from ..hateoas import Hateoas
 from django.urls import reverse
 
