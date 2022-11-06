@@ -21,7 +21,7 @@ class ObjetoView(APIView):
 
     def post(self, request, format=None):
         local_id = get_local_by_user_id(request.user.id).id
-        serializer_objeto = ObjetoSerializer(data=request.data)
+        serializer_objeto = ObjetoSerializer(data=request.data, context={'request': request})
 
         if serializer_objeto.is_valid():
             serializer_objeto.save(local_id=local_id)
