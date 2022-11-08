@@ -3,6 +3,7 @@ from django.db import models
 from django.core.validators import validate_image_file_extension
 from django.contrib.auth.models import AbstractUser
 import uuid
+from localflavor.br.models import BRCPFField
 
 
 def get_image_name(filename, id=uuid.uuid4()):
@@ -42,7 +43,7 @@ class Objeto(models.Model):
     imagem_objeto = models.ImageField(null=True, upload_to=get_objeto_image_name, validators=[validate_image_file_extension,])
     local = models.ForeignKey(to=Local, on_delete=models.CASCADE, null=False, blank=False)
     dono_nome = models.CharField(max_length=255, blank=False, null=True)
-    dono_cpf = models.CharField(max_length=11, blank=False, null=True)
+    dono_cpf = BRCPFField(null=True)
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
     
