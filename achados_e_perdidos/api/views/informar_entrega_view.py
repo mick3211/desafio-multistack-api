@@ -16,11 +16,13 @@ class InformarEntregaView(APIView):
         except:
             return Response({'message': 'Objeto não encontrado'}, status.HTTP_404_NOT_FOUND)
         self.check_object_permissions(request, objeto)
+        if objeto.entregue:
+            return Response({"messagem": 'O objeto já foi entregue ao dono'}, status.HTTP_400_BAD_REQUEST)
         serializer_objeto = InformarEntregaSerializer(data=request.data, context={"request": request});
         if serializer_objeto.is_valid():
             objeto.dono_nome = serializer_objeto.data['dono_nome']
             objeto.dono_cpf = serializer_objeto.data['dono_cpf']
             objeto.entregue = True
             objeto.save()
-            return Response('Dono do objeto definido com sucesso')
+            return Response({"messagem": 'Dono do objeto definido com sucesso'})
         return Response(serializer_objeto.errors, status.HTTP_400_BAD_REQUEST)
