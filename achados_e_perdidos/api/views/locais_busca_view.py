@@ -5,13 +5,16 @@ from ..models import Local
 from ..serializers.locais_busca_serializer import LocaisBuscaSerializer
 from ..models import Objeto
 from ..serializers.objeto_serializer import ObjetoSerializer
+from django.db.models import Q
 
 
 class LocaisBuscaView(APIView):
 
     def get(self, request, format=None):
         nome = request.query_params.get('nome')
-        locais = Local.objects.filter(nome=nome)
+        id = request.query_params.get('id')
+        query_params = Q(pk=id) | Q(nome__icontains=nome) if nome else Q(pk=id)
+        locais = Local.objects.filter(query_params)
 
         locais_serializer = LocaisBuscaSerializer(locais, many=True, context={'request': request})
 
