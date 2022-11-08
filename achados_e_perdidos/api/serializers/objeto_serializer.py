@@ -27,6 +27,8 @@ class ObjetoSerializer(serializers.ModelSerializer):
         links.add_put('atualizar_objeto', reverse('objeto-detail', kwargs={'objetoId': obj.id}))
         links.add_delete('apagar_objeto', reverse('objeto-detail', kwargs={'objetoId': obj.id}))
         links.add_post('definir_imagem_objeto', reverse('imagem-objeto', kwargs={'objetoId': obj.id}))
-        # links.add_patch('definir_dono_objeto', reverse())
+
+        if not obj.entregue:
+            links.add_post('definir_dono_objeto',  reverse('dono-objeto-list', kwargs={'objetoId': obj.id}))
 
         return links.to_array()
