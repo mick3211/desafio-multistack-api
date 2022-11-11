@@ -24,6 +24,6 @@ class LocaisBuscaView(APIView):
 class ObjetosLocalBuscaView(APIView):
 
     def get(self, request, local_id, format=None):
-        objetos = Objeto.objects.filter(local_id=local_id)
+        objetos = Objeto.objects.filter(local_id=local_id, entregue=False)
         serializer_objeto = ObjetoSerializer(objetos, many=True, context={'request': request})
         return Response(serializer_objeto.data, status.HTTP_200_OK)
