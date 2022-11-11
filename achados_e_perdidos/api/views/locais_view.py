@@ -31,6 +31,12 @@ class LocaisView(APIView):
         serializer_local = LocalSerializer(instance=local, context={'request': request})
         return Response(serializer_local.data)
 
+    def delete(self, request, format=None):
+        local = get_local_by_user_id(request.user.id)
+        local.user.delete()
+        local.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 class ImagemLocalView(APIView):
 
