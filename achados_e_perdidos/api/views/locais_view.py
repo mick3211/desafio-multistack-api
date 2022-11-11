@@ -34,7 +34,6 @@ class LocaisView(APIView):
     def delete(self, request, format=None):
         local = get_local_by_user_id(request.user.id)
         local.user.delete()
-        local.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
