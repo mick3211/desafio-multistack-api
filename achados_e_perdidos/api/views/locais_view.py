@@ -5,11 +5,11 @@ from ..serializers.local_serializer import LocalSerializer, EditarLocalSerialize
 from ..serializers.imagem_local_serializer import ImagemLocalSerializer
 from rest_framework.permissions import IsAuthenticated
 from ..services.local_service import get_local_by_user_id
-from ..permissions.get_local_view_permission import GetLocalViewPermission
+from ..permissions.post_local_view_permission import PostLocalViewPermission
 
 class LocaisView(APIView):
 
-    permission_classes = [GetLocalViewPermission]
+    permission_classes = [PostLocalViewPermission]
 
     def post(self, request, format=None):
         serializer_local = LocalSerializer(data=request.data)
