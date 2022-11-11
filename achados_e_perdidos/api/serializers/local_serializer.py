@@ -55,3 +55,49 @@ class LocalSerializer(serializers.ModelSerializer):
         user = User.objects.create(**user)
         local = Local.objects.create(user=user, **validated_data)
         return local
+
+
+class EditarUsuarioSerializer(UserSerializer):
+    email = serializers.EmailField(required=True)
+    password = serializers.CharField(write_only=True, required=False)
+    password_confirmation = serializers.CharField(write_only=True, required=False)
+
+    def validate_email(self, email):
+        user = self.context['request'].user
+        if User.objects.exclude(pk=user.pk).filter(email=email).exists():
+            raise serializers.ValidationError("usuário com este email já existe.")
+        return email
+
+    def validate(self, data):
+        password = data.get('password', None)
+        password_confirmation = data.get('password_confirmation', None)
+
+        if password is not None and password_confirmation != password:
+            raise serializers.ValidationError('As senhas devem ser iguais')
+        return data
+
+
+class EditarLocalSerializer(LocalSerializer):
+
+    usuario = EditarUsuarioSerializer(source='user')
+
+    
+    def update(self, instance, validated_data):
+        user = User.objects.get(pk=instance.user.pk)
+        user_data = validated_data.pop('user')
+        password = user_data.get('password')
+        
+        if password is not None:
+            user.set_password(password)
+        
+        user.email = user_data['email']
+        user.nome = user_data['nome']
+        user.save()
+
+        instance.nome = validated_data['nome']
+        instance.endereco = validated_data['endereco']
+        instance.contato = validated_data['contato']
+        instance.descricao = validated_data.get('descricao')
+        instance.save()
+
+        return instance
